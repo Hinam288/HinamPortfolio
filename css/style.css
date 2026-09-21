@@ -748,6 +748,48 @@ input, textarea {
     line-height: 1.8;
 }
 
+/* Stats */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin: 32px 0;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 24px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-normal);
+}
+
+.stat-item:hover {
+    border-color: var(--border-accent);
+    transform: translateY(-2px);
+}
+
+.stat-number {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent), var(--accent-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.2;
+    margin-bottom: 4px;
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 400;
+}
+
+/* Skills */
 .skills-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -1496,6 +1538,18 @@ input, textarea {
     .skills-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 12px;
+    }
+
+    .stat-item {
+        padding: 16px 12px;
+    }
+
+    .stat-number {
+        font-size: 1.6rem;
+    }
+
+    .stat-label {
+        font-size: 0.75rem;
     }
 
     .skill-item {
