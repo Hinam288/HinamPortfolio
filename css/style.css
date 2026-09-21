@@ -638,6 +638,13 @@ input, textarea {
     pointer-events: none;
 }
 
+.about-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+}
+
 .about-img-wrapper::after {
     content: '';
     position: absolute;
