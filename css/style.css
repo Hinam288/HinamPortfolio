@@ -589,6 +589,90 @@ input, textarea {
 }
 
 /* ============================================
+   MARQUEE BANNER
+   ============================================ */
+.marquee {
+    padding: 24px 0;
+    overflow: hidden;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-secondary);
+    position: relative;
+}
+
+.marquee::before,
+.marquee::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.marquee::before {
+    left: 0;
+    background: linear-gradient(90deg, var(--bg-secondary), transparent);
+}
+
+.marquee::after {
+    right: 0;
+    background: linear-gradient(-90deg, var(--bg-secondary), transparent);
+}
+
+.marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marqueeScroll 25s linear infinite;
+}
+
+.marquee-track:hover {
+    animation-play-state: paused;
+}
+
+.marquee-content {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-shrink: 0;
+}
+
+.marquee-item {
+    font-family: var(--font-heading);
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-primary);
+    opacity: 0.6;
+    padding: 0 24px;
+    white-space: nowrap;
+    transition: opacity var(--transition-fast);
+}
+
+.marquee-item:hover {
+    opacity: 1;
+    color: var(--accent);
+}
+
+.marquee-dot {
+    color: var(--accent);
+    font-size: 0.9rem;
+    flex-shrink: 0;
+    opacity: 0.8;
+}
+
+@keyframes marqueeScroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* ============================================
    ABOUT SECTION
    ============================================ */
 .about {
