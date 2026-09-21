@@ -179,9 +179,18 @@ document.addEventListener('DOMContentLoaded', () => {
         modalCategory.textContent = data.category;
         modalDesc.textContent = data.desc;
         
-        // If video link is provided
         if (data.video) {
-            modalVideo.innerHTML = `<iframe src="${data.video}" frameborder="0" allowfullscreen></iframe>`;
+            // Check if it's a local MP4 file or a YouTube/Vimeo embed
+            if (data.video.endsWith('.mp4') || data.video.endsWith('.webm') || data.video.endsWith('.mov')) {
+                // Local video — play with controls and sound
+                modalVideo.innerHTML = `
+                    <video src="${data.video}" controls autoplay 
+                        style="width:100%; height:100%; border-radius: 12px; background:#000;">
+                    </video>`;
+            } else {
+                // YouTube / Vimeo embed
+                modalVideo.innerHTML = `<iframe src="${data.video}" frameborder="0" allowfullscreen></iframe>`;
+            }
             modalVideo.style.display = 'block';
         } else {
             modalVideo.innerHTML = '';
@@ -195,34 +204,48 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeModal = () => {
         modal.classList.remove('active');
         document.body.style.overflow = '';
+        // Stop any playing video/audio
         modalVideo.innerHTML = '';
+    };
+
+    // Get video source from portfolio item (from data-video or from thumb video)
+    const getProjectData = (thumb) => {
+        const btn = thumb.querySelector('.btn-view');
+        if (!btn) return null;
+
+        let videoSrc = btn.getAttribute('data-video');
+        
+        // If no data-video, check if there's a video thumbnail
+        if (!videoSrc) {
+            const thumbVideo = thumb.querySelector('.thumb-video');
+            if (thumbVideo) {
+                videoSrc = thumbVideo.getAttribute('src');
+            }
+        }
+
+        return {
+            title: btn.getAttribute('data-title'),
+            category: btn.getAttribute('data-category'),
+            desc: btn.getAttribute('data-desc'),
+            video: videoSrc
+        };
     };
 
     // Attach click to view buttons
     document.querySelectorAll('.btn-view').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
-            openModal({
-                title: btn.getAttribute('data-title'),
-                category: btn.getAttribute('data-category'),
-                desc: btn.getAttribute('data-desc'),
-                video: btn.getAttribute('data-video')
-            });
+            const thumb = btn.closest('.portfolio-thumb');
+            const data = getProjectData(thumb);
+            if (data) openModal(data);
         });
     });
 
     // Also open modal on portfolio thumb click
     document.querySelectorAll('.portfolio-thumb').forEach(thumb => {
         thumb.addEventListener('click', () => {
-            const btn = thumb.querySelector('.btn-view');
-            if (btn) {
-                openModal({
-                    title: btn.getAttribute('data-title'),
-                    category: btn.getAttribute('data-category'),
-                    desc: btn.getAttribute('data-desc'),
-                    video: btn.getAttribute('data-video')
-                });
-            }
+            const data = getProjectData(thumb);
+            if (data) openModal(data);
         });
     });
 
