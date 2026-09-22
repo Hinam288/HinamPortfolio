@@ -247,9 +247,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (data.video.endsWith('.mp4') || data.video.endsWith('.webm') || data.video.endsWith('.mov')) {
                 // Local video — play with controls and sound
                 modalVideo.innerHTML = `
-                    <video src="${data.video}" controls autoplay 
+                    <video src="${data.video}" controls autoplay playsinline
                         style="width:100%; height:100%; border-radius: 12px; background:#000;">
                     </video>`;
+                
+                const vid = modalVideo.querySelector('video');
+                if (vid) {
+                    vid.play().catch(() => {});
+                }
             } else {
                 // YouTube / Vimeo embed
                 modalVideo.innerHTML = `<iframe src="${data.video}" frameborder="0" allowfullscreen></iframe>`;

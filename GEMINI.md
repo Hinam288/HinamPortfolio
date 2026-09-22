@@ -10,10 +10,11 @@
   - Đọc, tìm kiếm và phân tích toàn bộ codebase.
   - Sửa hoặc thêm code HTML, CSS, JavaScript theo đúng yêu cầu công việc.
   - Chạy các lệnh kiểm tra an toàn trong terminal (local server, git status, git diff, format/lint).
+  - Tự động commit và push code lên GitHub (`git add`, `git commit`, `git push origin main`) sau khi hoàn thành task.
 - **Cần hỏi ý kiến trước khi thực hiện**:
   - Xóa file hoặc thư mục hiện có.
   - Cài đặt thêm các package npm nặng hoặc tích hợp các thư viện bên thứ ba (CDN) chưa có sự đồng ý.
-  - Chạy các lệnh Git có tính rủi ro hoặc thay đổi lịch sử (`git push`, `git reset`, `git checkout .`, `git commit -a`).
+  - Chạy các lệnh Git có tính rủi ro hoặc làm mất dữ liệu (`git reset --hard`, `git checkout .`, `git clean`, v.v.).
   - Thay đổi kiến trúc thư mục chính của dự án.
 
 ## 3. Quy chuẩn công nghệ & Codebase

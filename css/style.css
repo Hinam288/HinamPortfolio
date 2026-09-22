@@ -1708,9 +1708,10 @@ input, textarea {
 
 .modal-title {
     font-family: var(--font-heading);
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     font-weight: 700;
     margin-bottom: 16px;
+    padding-right: 36px;
 }
 
 .modal-desc {
@@ -1720,11 +1721,11 @@ input, textarea {
 }
 
 .modal-video {
-    margin-top: 24px;
+    margin: 16px 0 20px;
     aspect-ratio: 16 / 9;
     border-radius: var(--radius-md);
     overflow: hidden;
-    background: var(--bg-primary);
+    background: #000;
 }
 
 .modal-video iframe {
@@ -1866,8 +1867,19 @@ input, textarea {
         gap: 16px;
     }
 
-    .portfolio-overlay {
-        opacity: 1;
+    /* Portfolio mobile: Không fade mờ, không đè chữ lên video preview */
+    .portfolio-thumb:has(.thumb-video) .portfolio-overlay,
+    .portfolio-thumb .thumb-video ~ .portfolio-overlay {
+        display: none !important;
+    }
+
+    .portfolio-thumb:hover {
+        transform: none;
+        box-shadow: none;
+    }
+
+    .portfolio-thumb:active {
+        transform: scale(0.98);
     }
 
     /* Services */
@@ -1928,5 +1940,13 @@ input, textarea {
 
     .section-title {
         font-size: clamp(1.6rem, 6vw, 2.2rem);
+    }
+}
+
+/* Thiết bị cảm ứng không có chuột hover: ẩn overlay mờ và chữ đè trên video */
+@media (hover: none) {
+    .portfolio-thumb:has(.thumb-video) .portfolio-overlay,
+    .portfolio-thumb .thumb-video ~ .portfolio-overlay {
+        display: none !important;
     }
 }
