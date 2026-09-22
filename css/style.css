@@ -822,15 +822,23 @@ input, textarea {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--accent-glow);
-    border-radius: var(--radius-sm);
+    background: transparent;
+    border-radius: 8px;
     flex-shrink: 0;
 }
 
-.skill-icon .icon {
-    width: 18px;
-    height: 18px;
-    color: var(--accent);
+.software-badge {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: block;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.skill-item:hover .software-badge {
+    transform: scale(1.08);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
 }
 
 /* About Role & Actions */
