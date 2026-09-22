@@ -131,37 +131,100 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ========================
-    // PORTFOLIO FILTER
+    // PORTFOLIO FILTER & PAGINATION (MAX 6 PREVIEWS)
     // ========================
     const filterBtns = document.querySelectorAll('.filter-btn');
     const portfolioItems = document.querySelectorAll('.portfolio-item');
+    const loadMoreContainer = document.getElementById('loadMoreContainer');
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    const loadMoreText = document.getElementById('loadMoreText');
+    const loadMoreIcon = document.getElementById('loadMoreIcon');
 
+    const MAX_VISIBLE = 6;
+    let currentFilter = 'all';
+    let isExpanded = false;
+
+    const updatePortfolioView = () => {
+        // Lấy danh sách item thuộc filter hiện tại
+        const matchingItems = Array.from(portfolioItems).filter(item => {
+            const category = item.getAttribute('data-category');
+            return currentFilter === 'all' || category === currentFilter;
+        });
+
+        const totalMatching = matchingItems.length;
+
+        // Ẩn tất cả items và tạm dừng video preview không hiển thị
+        portfolioItems.forEach(item => {
+            item.classList.add('hidden');
+            const video = item.querySelector('.thumb-video');
+            if (video && typeof video.pause === 'function') {
+                video.pause();
+            }
+        });
+
+        // Chọn các item được phép hiển thị (tối đa 6 hoặc toàn bộ nếu isExpanded)
+        const visibleItems = isExpanded ? matchingItems : matchingItems.slice(0, MAX_VISIBLE);
+
+        visibleItems.forEach(item => {
+            item.classList.remove('hidden');
+            item.classList.add('visible');
+            const video = item.querySelector('.thumb-video');
+            if (video && typeof video.play === 'function') {
+                video.play().catch(() => {});
+            }
+        });
+
+        // Cập nhật trạng thái nút "Xem thêm / Thu gọn"
+        if (loadMoreContainer) {
+            if (totalMatching > MAX_VISIBLE) {
+                loadMoreContainer.style.display = 'flex';
+                if (isExpanded) {
+                    if (loadMoreText) loadMoreText.textContent = 'Thu gọn';
+                    if (loadMoreIcon) loadMoreIcon.setAttribute('data-lucide', 'chevron-up');
+                } else {
+                    const remaining = totalMatching - MAX_VISIBLE;
+                    if (loadMoreText) loadMoreText.textContent = `Xem thêm (${remaining} video)`;
+                    if (loadMoreIcon) loadMoreIcon.setAttribute('data-lucide', 'chevron-down');
+                }
+                if (window.lucide) {
+                    lucide.createIcons();
+                }
+            } else {
+                loadMoreContainer.style.display = 'none';
+            }
+        }
+    };
+
+    // Sự kiện chuyển tab filter
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            // Update active button
             filterBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
 
-            const filter = btn.getAttribute('data-filter');
-
-            portfolioItems.forEach(item => {
-                const category = item.getAttribute('data-category');
-                
-                if (filter === 'all' || category === filter) {
-                    item.classList.remove('hidden');
-                    item.style.position = 'relative';
-                } else {
-                    item.classList.add('hidden');
-                    // Delay setting position to allow animation
-                    setTimeout(() => {
-                        if (item.classList.contains('hidden')) {
-                            item.style.position = 'absolute';
-                        }
-                    }, 500);
-                }
-            });
+            currentFilter = btn.getAttribute('data-filter');
+            isExpanded = false; // Reset trạng thái mở rộng khi đổi tab
+            updatePortfolioView();
         });
     });
+
+    // Sự kiện click nút Xem thêm / Thu gọn
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', () => {
+            isExpanded = !isExpanded;
+            updatePortfolioView();
+
+            // Nếu người dùng thu gọn, cuộn nhẹ về đầu portfolio section
+            if (!isExpanded) {
+                const portfolioSection = document.getElementById('portfolio');
+                if (portfolioSection) {
+                    portfolioSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        });
+    }
+
+    // Khởi tạo hiển thị ban đầu
+    updatePortfolioView();
 
     // ========================
     // MODAL
