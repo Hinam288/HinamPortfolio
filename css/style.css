@@ -401,6 +401,14 @@ input, textarea {
     box-shadow: 0 0 0 2px var(--bg-primary), 0 0 0 4px var(--accent);
 }
 
+/* Nav Actions (Theme Toggle & Hamburger) */
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 1001;
+}
+
 /* Theme Toggle */
 .theme-toggle {
     position: relative;
@@ -1876,37 +1884,156 @@ input, textarea {
         display: none;
     }
 
-    /* About */
+    /* About Section Mobile Redesign */
+    .about {
+        padding-top: 96px;
+        padding-bottom: 56px;
+    }
+
     .about-grid {
         grid-template-columns: 1fr;
-        gap: 40px;
+        gap: 24px;
+        text-align: center;
+    }
+
+    .about-image {
+        display: flex;
+        justify-content: center;
     }
 
     .about-img-wrapper {
-        max-width: 280px;
+        max-width: 175px;
+        aspect-ratio: 3 / 4;
         margin: 0 auto;
+        border-radius: 20px;
+        border: 2px solid var(--border-accent);
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45), 0 0 24px var(--accent-glow);
     }
 
-    .skills-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
+    .about-img-wrapper::after {
+        display: none;
+    }
+
+    .about-img-border {
+        display: none;
+    }
+
+    .about-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .about-content .section-label {
+        padding-left: 0;
+        margin-bottom: 8px;
+        font-size: 0.78rem;
+        letter-spacing: 2.5px;
+    }
+
+    .about-content .section-label::before {
+        display: none;
+    }
+
+    .about-content .section-title {
+        font-size: clamp(1.85rem, 6vw, 2.3rem);
+        font-weight: 800;
+        margin-bottom: 12px;
+        letter-spacing: -0.5px;
+    }
+
+    .about-role {
+        margin: 0 auto 16px;
+        font-size: 0.88rem;
+        padding: 6px 16px;
+    }
+
+    .about-text {
+        font-size: 0.92rem;
+        line-height: 1.7;
+        color: var(--text-secondary);
+        max-width: 440px;
+        margin: 0 auto 20px;
+        text-align: center;
+    }
+
+    .about-actions {
+        display: flex;
+        gap: 10px;
+        width: 100%;
+        max-width: 340px;
+        margin: 0 auto 24px;
+        justify-content: center;
+    }
+
+    .about-actions .btn {
+        flex: 1;
+        justify-content: center;
+        padding: 12px 16px;
+        font-size: 0.88rem;
+        white-space: nowrap;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        width: 100%;
+        max-width: 440px;
+        margin: 0 auto 24px;
     }
 
     .stat-item {
-        padding: 16px 12px;
+        padding: 14px 8px;
+        border-radius: var(--radius-md);
     }
 
     .stat-number {
-        font-size: 1.6rem;
+        font-size: 1.55rem;
+        margin-bottom: 2px;
     }
 
     .stat-label {
-        font-size: 0.75rem;
+        font-size: 0.72rem;
+        line-height: 1.3;
+    }
+
+    .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 8px;
+        width: 100%;
+        max-width: 440px;
+        margin: 0 auto;
     }
 
     .skill-item {
-        padding: 12px;
-        font-size: 0.8rem;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 10px 4px;
+        gap: 6px;
+        font-size: 0.72rem;
+        border-radius: var(--radius-sm);
+    }
+
+    .skill-item span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+        font-size: 0.72rem;
+    }
+
+    .skill-icon {
+        width: 32px;
+        height: 32px;
+    }
+
+    .software-badge {
+        width: 32px;
+        height: 32px;
     }
 
     /* Portfolio */
@@ -1984,10 +2111,6 @@ input, textarea {
     .hero-buttons .btn {
         width: 100%;
         justify-content: center;
-    }
-
-    .skills-grid {
-        grid-template-columns: 1fr 1fr;
     }
 
     .portfolio-filters {
