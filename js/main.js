@@ -50,19 +50,33 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
     });
 
-    // Close menu on link click
+    // Set active link and close menu on click
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
             hamburger.classList.remove('active');
             navMenu.classList.remove('active');
             document.body.style.overflow = '';
+
+            navLinks.forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
         });
     });
 
     // Active link on scroll
     const sections = document.querySelectorAll('section[id]');
     const updateActiveLink = () => {
-        const scrollY = window.scrollY + 100;
+        // Nếu cuộn gần chạm đáy trang, ưu tiên active tab Liên hệ (#contact)
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 80) {
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#contact') {
+                    link.classList.add('active');
+                }
+            });
+            return;
+        }
+
+        const scrollY = window.scrollY + 140;
 
         sections.forEach(section => {
             const top = section.offsetTop;
@@ -327,46 +341,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // ========================
-    // CONTACT FORM
-    // ========================
-    const contactForm = document.getElementById('contactForm');
-    const formStatus = document.getElementById('formStatus');
 
-    if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            const name = document.getElementById('name').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const message = document.getElementById('message').value.trim();
-
-            // Basic validation
-            if (!name || !email || !message) {
-                formStatus.textContent = 'Vui lòng điền đầy đủ thông tin.';
-                formStatus.className = 'form-status error';
-                return;
-            }
-
-            // Email format check
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                formStatus.textContent = 'Vui lòng nhập email hợp lệ.';
-                formStatus.className = 'form-status error';
-                return;
-            }
-
-            // Simulate success (replace with actual form submission logic)
-            formStatus.textContent = 'Cảm ơn bạn! Tin nhắn đã được gửi thành công. ✓';
-            formStatus.className = 'form-status success';
-            contactForm.reset();
-
-            // Auto-hide status after 5s
-            setTimeout(() => {
-                formStatus.className = 'form-status';
-            }, 5000);
-        });
-    }
 
     // ========================
     // SMOOTH SCROLL FOR ALL ANCHOR LINKS
