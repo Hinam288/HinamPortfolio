@@ -556,6 +556,7 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.classList.remove('active');
         document.body.style.overflow = '';
         currentModalIndex = -1;
+        modalVideo.classList.remove('crossfade-out', 'crossfade-in');
         // Stop any playing video/audio
         modalVideo.innerHTML = '';
         if (projectDetailPanel) {
@@ -568,6 +569,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Open Modal by index in current active items list
+    let isModalTransitioning = false;
     const openModalByIndex = (index) => {
         const items = getActiveProjectItems();
         if (!items || items.length === 0) return;
@@ -584,7 +586,25 @@ document.addEventListener('DOMContentLoaded', () => {
         const thumb = currentItem.querySelector('.portfolio-thumb');
         const data = getProjectData(thumb);
 
-        if (data) {
+        if (!data) return;
+
+        // Nếu Modal đang mở -> Áp dụng hiệu ứng Video Crossfade mượt mà
+        if (modal.classList.contains('active')) {
+            if (isModalTransitioning) return;
+            isModalTransitioning = true;
+            modalVideo.classList.remove('crossfade-in');
+            modalVideo.classList.add('crossfade-out');
+
+            setTimeout(() => {
+                openModal(data, index + 1, items.length);
+                modalVideo.classList.remove('crossfade-out');
+                modalVideo.classList.add('crossfade-in');
+                setTimeout(() => {
+                    modalVideo.classList.remove('crossfade-in');
+                    isModalTransitioning = false;
+                }, 200);
+            }, 160);
+        } else {
             openModal(data, index + 1, items.length);
         }
     };
@@ -687,18 +707,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalContent = document.querySelector('.modal-content');
     if (modalContent) {
         let touchStartX = 0;
+        let touchStartY = 0;
         let touchEndX = 0;
+        let touchEndY = 0;
+
         modalContent.addEventListener('touchstart', (e) => {
             touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
         }, { passive: true });
 
         modalContent.addEventListener('touchend', (e) => {
             touchEndX = e.changedTouches[0].screenX;
+            touchEndY = e.changedTouches[0].screenY;
             const diffX = touchEndX - touchStartX;
-            if (diffX < -50) {
-                nextProject(); // Vuốt sang trái -> Xem dự án kế tiếp
-            } else if (diffX > 50) {
-                prevProject(); // Vuốt sang phải -> Xem dự án trước đó
+            const diffY = touchEndY - touchStartY;
+
+            // Chỉ kích hoạt đổi dự án khi vuốt ngang dứt khoát, không ảnh hưởng cuộn dọc xem chi tiết
+            if (Math.abs(diffX) > 45 && Math.abs(diffX) > Math.abs(diffY) * 1.4) {
+                if (diffX < 0) {
+                    nextProject(); // Vuốt sang trái -> Xem dự án kế tiếp
+                } else {
+                    prevProject(); // Vuốt sang phải -> Xem dự án trước đó
+                }
             }
         }, { passive: true });
     }
