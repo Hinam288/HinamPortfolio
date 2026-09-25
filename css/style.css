@@ -1770,6 +1770,13 @@ input, textarea {
     height: 18px;
 }
 
+.modal-header-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
 .modal-category {
     display: inline-block;
     font-size: 0.75rem;
@@ -1777,7 +1784,16 @@ input, textarea {
     text-transform: uppercase;
     letter-spacing: 2px;
     color: var(--accent);
-    margin-bottom: 12px;
+}
+
+.modal-count-pill {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-accent);
+    color: var(--accent);
+    border-radius: 50px;
 }
 
 .modal-title {
@@ -2064,11 +2080,100 @@ input, textarea {
 }
 
 /* ============================================
+   MODAL NAVIGATION (NEXT / PREV)
+   ============================================ */
+/* Floating Navigation Arrows (Desktop) */
+.modal-nav-arrow {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: rgba(18, 18, 18, 0.85);
+    border: 1px solid var(--border-accent);
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2005;
+    transition: all var(--transition-normal);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.modal-nav-arrow:hover {
+    background: var(--accent);
+    color: #0a0a0a;
+    border-color: var(--accent-light);
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 0 25px var(--accent-glow-strong);
+}
+
+.modal-nav-prev {
+    left: max(24px, calc((100vw - 820px) / 4));
+}
+
+.modal-nav-next {
+    right: max(24px, calc((100vw - 820px) / 4));
+}
+
+.nav-arrow-icon {
+    width: 28px;
+    height: 28px;
+}
+
+/* Modal Footer Navigation */
+.modal-footer-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+}
+
+.btn-modal-nav {
+    padding: 10px 22px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    border-radius: 50px;
+    flex-shrink: 0;
+}
+
+.modal-nav-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.indicator-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+}
+
+.indicator-num {
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+/* ============================================
    RESPONSIVE — TABLET (<=1024px)
    ============================================ */
 @media (max-width: 1024px) {
     :root {
         --section-padding: 80px 0;
+    }
+
+    .modal-nav-arrow {
+        display: none !important;
     }
 
     .about-grid {
@@ -2422,6 +2527,25 @@ input, textarea {
    RESPONSIVE — SMALL MOBILE (<=480px)
    ============================================ */
 @media (max-width: 480px) {
+    .modal-footer-nav {
+        gap: 8px;
+        padding-top: 14px;
+        margin-top: 18px;
+    }
+
+    .btn-modal-nav {
+        padding: 9px 12px;
+        font-size: 0.78rem;
+    }
+
+    .btn-modal-nav span {
+        font-size: 0.78rem;
+    }
+
+    .indicator-label {
+        display: none;
+    }
+
     .hero-buttons {
         flex-direction: column;
         width: 100%;

@@ -388,7 +388,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // ========================
-    // MODAL
+    // MODAL & PROJECT NAVIGATION
     // ========================
     const modal = document.getElementById('projectModal');
     const modalBackdrop = document.getElementById('modalBackdrop');
@@ -399,6 +399,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalVideo = document.getElementById('modalVideo');
     const btnProjectDetail = document.getElementById('btnProjectDetail');
     const projectDetailPanel = document.getElementById('projectDetailPanel');
+    const modalCountPill = document.getElementById('modalCountPill');
+    const modalIndicatorNum = document.getElementById('modalIndicatorNum');
+    const modalNavPrev = document.getElementById('modalNavPrev');
+    const modalNavNext = document.getElementById('modalNavNext');
+    const btnModalPrev = document.getElementById('btnModalPrev');
+    const btnModalNext = document.getElementById('btnModalNext');
+
+    let currentModalIndex = -1;
+
+    // Get current list of projects matching the active filter
+    const getActiveProjectItems = () => {
+        return Array.from(portfolioItems).filter(item => {
+            if (currentFilter === 'all') return true;
+            return item.getAttribute('data-category') === currentFilter;
+        });
+    };
 
     // Toggle Project Detail Panel
     if (btnProjectDetail && projectDetailPanel) {
@@ -419,10 +435,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const openModal = (data) => {
+    const openModal = (data, currentIndex = 1, totalCount = 1) => {
         modalTitle.textContent = data.title;
         modalCategory.textContent = data.category;
         modalDesc.textContent = data.desc;
+
+        if (modalCountPill) {
+            modalCountPill.textContent = `${currentIndex} / ${totalCount}`;
+        }
+        if (modalIndicatorNum) {
+            modalIndicatorNum.textContent = `${currentIndex} / ${totalCount}`;
+        }
         
         if (data.video) {
             // Check if it's a local MP4 file or a YouTube/Vimeo embed
@@ -469,6 +492,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `).join('');
 
+            // Keep expanded state if user already had details open when switching projects
+            const wasDetailOpen = projectDetailPanel.style.display === 'block';
+
             projectDetailPanel.innerHTML = `
                 <div class="detail-card">
                     <div class="detail-meta-grid">
@@ -503,11 +529,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
 
-            // Reset panel state to collapsed
-            projectDetailPanel.style.display = 'none';
-            if (btnProjectDetail) {
-                btnProjectDetail.classList.remove('active');
-                btnProjectDetail.setAttribute('aria-expanded', 'false');
+            if (wasDetailOpen) {
+                projectDetailPanel.style.display = 'block';
+                if (btnProjectDetail) {
+                    btnProjectDetail.classList.add('active');
+                    btnProjectDetail.setAttribute('aria-expanded', 'true');
+                }
+            } else {
+                projectDetailPanel.style.display = 'none';
+                if (btnProjectDetail) {
+                    btnProjectDetail.classList.remove('active');
+                    btnProjectDetail.setAttribute('aria-expanded', 'false');
+                }
             }
         }
 
@@ -522,6 +555,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeModal = () => {
         modal.classList.remove('active');
         document.body.style.overflow = '';
+        currentModalIndex = -1;
         // Stop any playing video/audio
         modalVideo.innerHTML = '';
         if (projectDetailPanel) {
@@ -532,6 +566,50 @@ document.addEventListener('DOMContentLoaded', () => {
             btnProjectDetail.setAttribute('aria-expanded', 'false');
         }
     };
+
+    // Open Modal by index in current active items list
+    const openModalByIndex = (index) => {
+        const items = getActiveProjectItems();
+        if (!items || items.length === 0) return;
+
+        // Wrap around circular navigation
+        if (index < 0) {
+            index = items.length - 1;
+        } else if (index >= items.length) {
+            index = 0;
+        }
+
+        currentModalIndex = index;
+        const currentItem = items[index];
+        const thumb = currentItem.querySelector('.portfolio-thumb');
+        const data = getProjectData(thumb);
+
+        if (data) {
+            openModal(data, index + 1, items.length);
+        }
+    };
+
+    const nextProject = () => {
+        if (!modal.classList.contains('active')) return;
+        const items = getActiveProjectItems();
+        if (items.length <= 1) return;
+        const nextIdx = currentModalIndex >= 0 ? currentModalIndex + 1 : 0;
+        openModalByIndex(nextIdx);
+    };
+
+    const prevProject = () => {
+        if (!modal.classList.contains('active')) return;
+        const items = getActiveProjectItems();
+        if (items.length <= 1) return;
+        const prevIdx = currentModalIndex >= 0 ? currentModalIndex - 1 : items.length - 1;
+        openModalByIndex(prevIdx);
+    };
+
+    // Navigation Buttons Event Listeners
+    if (modalNavPrev) modalNavPrev.addEventListener('click', prevProject);
+    if (modalNavNext) modalNavNext.addEventListener('click', nextProject);
+    if (btnModalPrev) btnModalPrev.addEventListener('click', prevProject);
+    if (btnModalNext) btnModalNext.addEventListener('click', nextProject);
 
     // Get video source from portfolio item (from data-video or from thumb video)
     const getProjectData = (thumb) => {
@@ -560,33 +638,70 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     };
 
+    // Open modal by clicking item
+    const openModalByItem = (item) => {
+        const items = getActiveProjectItems();
+        const index = items.indexOf(item);
+        if (index !== -1) {
+            openModalByIndex(index);
+        } else {
+            const thumb = item.querySelector('.portfolio-thumb');
+            const data = getProjectData(thumb);
+            if (data) openModal(data, 1, 1);
+        }
+    };
+
     // Attach click to view buttons
     document.querySelectorAll('.btn-view').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
-            const thumb = btn.closest('.portfolio-thumb');
-            const data = getProjectData(thumb);
-            if (data) openModal(data);
+            const item = btn.closest('.portfolio-item');
+            if (item) openModalByItem(item);
         });
     });
 
     // Also open modal on portfolio thumb click
     document.querySelectorAll('.portfolio-thumb').forEach(thumb => {
         thumb.addEventListener('click', () => {
-            const data = getProjectData(thumb);
-            if (data) openModal(data);
+            const item = thumb.closest('.portfolio-item');
+            if (item) openModalByItem(item);
         });
     });
 
     if (modalClose) modalClose.addEventListener('click', closeModal);
     if (modalBackdrop) modalBackdrop.addEventListener('click', closeModal);
 
-    // Close modal on Escape key
+    // Keyboard navigation: Escape to close, ArrowLeft for Prev, ArrowRight for Next
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.classList.contains('active')) {
+        if (!modal.classList.contains('active')) return;
+        if (e.key === 'Escape') {
             closeModal();
+        } else if (e.key === 'ArrowRight') {
+            nextProject();
+        } else if (e.key === 'ArrowLeft') {
+            prevProject();
         }
     });
+
+    // Mobile touch swipe gesture on modal content
+    const modalContent = document.querySelector('.modal-content');
+    if (modalContent) {
+        let touchStartX = 0;
+        let touchEndX = 0;
+        modalContent.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        modalContent.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            const diffX = touchEndX - touchStartX;
+            if (diffX < -50) {
+                nextProject(); // Vuốt sang trái -> Xem dự án kế tiếp
+            } else if (diffX > 50) {
+                prevProject(); // Vuốt sang phải -> Xem dự án trước đó
+            }
+        }, { passive: true });
+    }
 
 
 

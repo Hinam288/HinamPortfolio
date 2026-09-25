@@ -743,12 +743,24 @@
     <!-- ===================== MODAL ===================== -->
     <div class="modal" id="projectModal">
         <div class="modal-backdrop" id="modalBackdrop"></div>
+
+        <!-- Floating Navigation Arrows for Desktop -->
+        <button type="button" class="modal-nav-arrow modal-nav-prev" id="modalNavPrev" aria-label="Dự án trước (phím ←)" title="Dự án trước (phím ←)">
+            <i data-lucide="chevron-left" class="nav-arrow-icon"></i>
+        </button>
+        <button type="button" class="modal-nav-arrow modal-nav-next" id="modalNavNext" aria-label="Dự án tiếp theo (phím →)" title="Dự án tiếp theo (phím →)">
+            <i data-lucide="chevron-right" class="nav-arrow-icon"></i>
+        </button>
+
         <div class="modal-content">
             <button class="modal-close" id="modalClose" aria-label="Đóng cửa sổ">
                 <i data-lucide="x" class="close-icon"></i>
             </button>
             <div class="modal-body">
-                <span class="modal-category" id="modalCategory"></span>
+                <div class="modal-header-meta">
+                    <span class="modal-category" id="modalCategory"></span>
+                    <span class="modal-count-pill" id="modalCountPill">1 / 16</span>
+                </div>
                 <h3 class="modal-title" id="modalTitle"></h3>
                 <div class="modal-video" id="modalVideo"></div>
                 <p class="modal-desc" id="modalDesc"></p>
@@ -767,6 +779,22 @@
 
                 <!-- Bảng chi tiết thông tin dự án -->
                 <div class="project-detail-panel" id="projectDetailPanel" style="display: none;"></div>
+
+                <!-- Footer Navigation Buttons inside Modal -->
+                <div class="modal-footer-nav">
+                    <button type="button" class="btn btn-outline btn-modal-nav" id="btnModalPrev">
+                        <i data-lucide="chevron-left" class="btn-icon"></i>
+                        <span>Dự án trước</span>
+                    </button>
+                    <div class="modal-nav-indicator">
+                        <span class="indicator-label">Dự án</span>
+                        <span class="indicator-num" id="modalIndicatorNum">1 / 16</span>
+                    </div>
+                    <button type="button" class="btn btn-primary btn-modal-nav" id="btnModalNext">
+                        <span>Dự án tiếp</span>
+                        <i data-lucide="chevron-right" class="btn-icon"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
