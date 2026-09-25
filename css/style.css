@@ -2,7 +2,7 @@
    CSS VARIABLES & RESET
    ============================================ */
 :root {
-    /* Colors */
+    /* Colors — Tone Cam Hổ Phách & Hoàng Hôn (Warm Amber / Sunset Gold - Hỏa sinh Thổ) */
     --bg-primary: #0a0a0a;
     --bg-secondary: #111111;
     --bg-card: #161616;
@@ -10,12 +10,12 @@
     --text-primary: #f5f5f5;
     --text-secondary: #a0a0a0;
     --text-muted: #666666;
-    --accent: #c9a84c;
-    --accent-light: #e8c547;
-    --accent-glow: rgba(201, 168, 76, 0.15);
-    --accent-glow-strong: rgba(201, 168, 76, 0.3);
+    --accent: #f38020;
+    --accent-light: #ffa048;
+    --accent-glow: rgba(243, 128, 32, 0.15);
+    --accent-glow-strong: rgba(243, 128, 32, 0.35);
     --border: rgba(255, 255, 255, 0.06);
-    --border-accent: rgba(201, 168, 76, 0.3);
+    --border-accent: rgba(243, 128, 32, 0.35);
 
     /* Typography */
     --font-heading: 'Inter', sans-serif;
@@ -46,12 +46,12 @@
     --text-primary: #1a1a1a;
     --text-secondary: #555555;
     --text-muted: #999999;
-    --accent: #b08d35;
-    --accent-light: #c9a84c;
-    --accent-glow: rgba(176, 141, 53, 0.1);
-    --accent-glow-strong: rgba(176, 141, 53, 0.2);
+    --accent: #d96514;
+    --accent-light: #f38020;
+    --accent-glow: rgba(217, 101, 20, 0.12);
+    --accent-glow-strong: rgba(217, 101, 20, 0.25);
     --border: rgba(0, 0, 0, 0.08);
-    --border-accent: rgba(176, 141, 53, 0.3);
+    --border-accent: rgba(217, 101, 20, 0.35);
 }
 
 [data-theme="light"] .navbar.scrolled {
@@ -60,9 +60,9 @@
 
 [data-theme="light"] .hero-gradient {
     background:
-        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(176, 141, 53, 0.06) 0%, transparent 60%),
-        radial-gradient(ellipse 80% 50% at 80% 80%, rgba(176, 141, 53, 0.04) 0%, transparent 50%),
-        radial-gradient(ellipse 60% 40% at 20% 60%, rgba(176, 141, 53, 0.03) 0%, transparent 50%);
+        radial-gradient(ellipse 60% 50% at 50% 0%, var(--accent-glow) 0%, transparent 60%),
+        radial-gradient(ellipse 80% 50% at 80% 80%, rgba(217, 101, 20, 0.04) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 40% at 20% 60%, rgba(217, 101, 20, 0.02) 0%, transparent 50%);
 }
 
 [data-theme="light"] .hero-grain {
@@ -246,7 +246,7 @@ input, textarea {
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(201, 168, 76, 0.3);
+    box-shadow: 0 8px 32px var(--accent-glow-strong);
 }
 
 .btn-outline {
@@ -283,7 +283,7 @@ input, textarea {
 }
 
 .btn-cv:hover {
-    box-shadow: 0 6px 24px rgba(201, 168, 76, 0.35);
+    box-shadow: 0 6px 24px var(--accent-glow-strong);
 }
 
 .btn-icon {
@@ -393,10 +393,10 @@ input, textarea {
 }
 
 [data-theme="light"] .nav-link.active {
-    color: #9c7519;
-    background: rgba(176, 141, 53, 0.12);
-    border-color: rgba(176, 141, 53, 0.32);
-    box-shadow: 0 2px 10px rgba(176, 141, 53, 0.15);
+    color: var(--accent);
+    background: var(--accent-glow);
+    border-color: var(--border-accent);
+    box-shadow: 0 2px 10px var(--accent-glow);
 }
 
 .nav-link.active::after {
@@ -412,7 +412,7 @@ input, textarea {
 }
 
 .nav-link-cta:hover {
-    box-shadow: 0 4px 20px rgba(201, 168, 76, 0.35);
+    box-shadow: 0 4px 20px var(--accent-glow-strong);
     transform: translateY(-1px);
     background: linear-gradient(135deg, var(--accent-light), var(--accent));
 }
@@ -536,9 +536,9 @@ input, textarea {
     position: absolute;
     inset: 0;
     background: 
-        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(201, 168, 76, 0.08) 0%, transparent 60%),
-        radial-gradient(ellipse 80% 50% at 80% 80%, rgba(201, 168, 76, 0.04) 0%, transparent 50%),
-        radial-gradient(ellipse 60% 40% at 20% 60%, rgba(201, 168, 76, 0.03) 0%, transparent 50%);
+        radial-gradient(ellipse 60% 50% at 50% 0%, var(--accent-glow) 0%, transparent 60%),
+        radial-gradient(ellipse 80% 50% at 80% 80%, rgba(243, 128, 32, 0.05) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 40% at 20% 60%, rgba(243, 128, 32, 0.03) 0%, transparent 50%);
 }
 
 .hero-grain {
@@ -1208,12 +1208,12 @@ input, textarea {
     align-items: center;
     justify-content: center;
     transition: all var(--transition-normal);
-    box-shadow: 0 0 40px rgba(201, 168, 76, 0.3);
+    box-shadow: 0 0 40px var(--accent-glow-strong);
 }
 
 .play-button:hover {
     transform: scale(1.1);
-    box-shadow: 0 0 60px rgba(201, 168, 76, 0.5);
+    box-shadow: 0 0 60px var(--accent-glow-strong);
 }
 
 .play-icon {
@@ -1814,7 +1814,7 @@ input, textarea {
     width: 100%;
     margin-top: 24px;
     padding: 14px 20px;
-    background: rgba(201, 168, 76, 0.08);
+    background: var(--accent-glow);
     border: 1px solid var(--border-accent);
     border-radius: var(--radius-md);
     color: var(--text-primary);
@@ -1829,14 +1829,14 @@ input, textarea {
 }
 
 .btn-project-detail:hover {
-    background: rgba(201, 168, 76, 0.16);
+    background: var(--accent-glow-strong);
     border-color: var(--accent);
     transform: translateY(-1px);
-    box-shadow: 0 4px 20px rgba(201, 168, 76, 0.2);
+    box-shadow: 0 4px 20px var(--accent-glow-strong);
 }
 
 .btn-project-detail.active {
-    background: rgba(201, 168, 76, 0.18);
+    background: var(--accent-glow-strong);
     border-color: var(--accent);
 }
 
@@ -2047,7 +2047,7 @@ input, textarea {
 
 /* Highlights Box */
 .detail-highlight-box {
-    background: rgba(201, 168, 76, 0.06);
+    background: var(--accent-glow);
     border: 1px dashed var(--border-accent);
     border-radius: var(--radius-md);
     padding: 16px 18px;
