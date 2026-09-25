@@ -26,14 +26,14 @@
     <!-- ===================== NAVBAR ===================== -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
-            <a href="#about" class="nav-logo">
+            <a href="#hero" class="nav-logo">
                 <span class="logo-text">So<span class="logo-accent">Sea</span></span>
             </a>
 
             <ul class="nav-menu" id="navMenu">
-                <li><a href="#about" class="nav-link active">Giới thiệu</a></li>
-                <li><a href="#hero" class="nav-link">Kể chuyện</a></li>
+                <li><a href="#hero" class="nav-link active">Trang chủ</a></li>
                 <li><a href="#showreel" class="nav-link">Showreel</a></li>
+                <li><a href="#about" class="nav-link">Giới thiệu</a></li>
                 <li><a href="#portfolio" class="nav-link">Dự án</a></li>
                 <li><a href="#services" class="nav-link">Dịch vụ</a></li>
                 <li><a href="#contact" class="nav-link nav-link-cta">Liên hệ</a></li>
@@ -53,6 +53,135 @@
             </div>
         </div>
     </nav>
+
+    <!-- ===================== HERO ===================== -->
+    <section class="hero" id="hero">
+        <div class="hero-bg">
+            <div class="hero-gradient"></div>
+            <div class="hero-grain"></div>
+        </div>
+        <div class="hero-content">
+            <p class="hero-subtitle reveal">— Video Editor & Motion Graphic Designer</p>
+            <h1 class="hero-title reveal">
+                Kể câu chuyện<br>
+                của bạn qua<br>
+                <span class="text-accent">từng khung hình</span>
+            </h1>
+            <p class="hero-desc reveal">
+                Biến ý tưởng thành những thước phim sống động, tinh tế và đầy cảm xúc. Hơn 4 năm kinh nghiệm dựng phim, animation, quay phim và hậu kỳ âm thanh.
+            </p>
+            <div class="hero-buttons reveal">
+                <a href="#showreel" class="btn btn-primary">
+                    <i data-lucide="play" class="btn-icon"></i>
+                    <span>Xem Showreel</span>
+                </a>
+                <a href="assets/CV_Vu_Hai_Nam_Video_Editor.pdf" target="_blank" download="CV_Vu_Hai_Nam_Video_Editor.pdf" class="btn btn-outline btn-cv">
+                    <i data-lucide="file-down" class="btn-icon"></i>
+                    <span>Tải CV (PDF)</span>
+                </a>
+                <a href="#portfolio" class="btn btn-ghost">
+                    <span>Xem dự án</span>
+                    <i data-lucide="arrow-right" class="btn-icon"></i>
+                </a>
+            </div>
+        </div>
+        <div class="hero-scroll">
+            <a href="#showreel" class="scroll-indicator">
+                <span>Cuộn xuống</span>
+                <div class="scroll-line"></div>
+            </a>
+        </div>
+    </section>
+
+    <!-- ===================== SHOWREEL ===================== -->
+    <section class="section showreel" id="showreel">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label reveal">Showreel</span>
+                <h2 class="section-title reveal">Xem <span class="text-accent">Showreel</span> của tôi</h2>
+                <p class="section-desc reveal">Tổng hợp những khoảnh khắc đẹp nhất từ các dự án gần đây.</p>
+            </div>
+            <div class="showreel-video reveal">
+                <div class="video-wrapper">
+                    <div class="video-placeholder" id="videoPlaceholder">
+                        <div class="play-button" id="playButton">
+                            <i data-lucide="play" class="play-icon"></i>
+                        </div>
+                        <p class="video-note">Nhấn để phát showreel</p>
+                    </div>
+                    <iframe 
+                        id="showreelVideo"
+                        src="" 
+                        data-src="https://www.youtube.com/embed/5AFEA5_EMss"
+                        title="Showreel — Hải Nam" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen
+                        style="display:none;">
+                    </iframe>
+                </div>
+                <div class="video-glow"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== MARQUEE BANNER ===================== -->
+    <div class="marquee">
+        <div class="marquee-track">
+            <div class="marquee-content">
+                <span class="marquee-item">Video Editor</span>
+                <span class="marquee-dot">✦</span>
+                <span class="marquee-item">Motion Graphics</span>
+                <span class="marquee-dot">✦</span>
+                <span class="marquee-item">Filmmaker</span>
+                <span class="marquee-dot">✦</span>
+                <span class="marquee-item">Color Grading</span>
+                <span class="marquee-dot">✦</span>
+                <span class="marquee-item">Storytelling</span>
+                <span class="marquee-dot">✦</span>
+                <span class="marquee-item">Cinematography</span>
+                <span class="marquee-dot">✦</span>
+                <span class="marquee-item">Video Editor</span>
+                <span class="marquee-dot">✦</span>
+                <span class="marquee-item">Motion Graphics</span>
+                <span class="marquee-dot">✦</span>
+                <span class="marquee-item">Filmmaker</span>
+                <span class="marquee-dot">✦</span>
+                <span class="marquee-item">Color Grading</span>
+                <span class="marquee-dot">✦</span>
+                <span class="marquee-item">Storytelling</span>
+                <span class="marquee-dot">✦</span>
+                <span class="marquee-item">Cinematography</span>
+                <span class="marquee-dot">✦</span>
+            </div>
+            <div class="marquee-content" aria-hidden="true">
+                <span class="marquee-item">Video Editor</span>
+                <span class="marquee-dot">✦</span>
+                <span class="marquee-item">Motion Graphics</span>
+                <span class="marquee-dot">✦</span>
+                <span class="marquee-item">Filmmaker</span>
+                <span class="marquee-dot">✦</span>
+                <span class="marquee-item">Color Grading</span>
+                <span class="marquee-dot">✦</span>
+                <span class="marquee-item">Storytelling</span>
+                <span class="marquee-dot">✦</span>
+                <span class="marquee-item">Cinematography</span>
+                <span class="marquee-dot">✦</span>
+                <span class="marquee-item">Video Editor</span>
+                <span class="marquee-dot">✦</span>
+                <span class="marquee-item">Motion Graphics</span>
+                <span class="marquee-dot">✦</span>
+                <span class="marquee-item">Filmmaker</span>
+                <span class="marquee-dot">✦</span>
+                <span class="marquee-item">Color Grading</span>
+                <span class="marquee-dot">✦</span>
+                <span class="marquee-item">Storytelling</span>
+                <span class="marquee-dot">✦</span>
+                <span class="marquee-item">Cinematography</span>
+                <span class="marquee-dot">✦</span>
+            </div>
+        </div>
+    </div>
 
     <!-- ===================== ABOUT ===================== -->
     <section class="section about" id="about">
@@ -91,7 +220,11 @@
                     </div>
 
                     <div class="about-actions reveal">
-                        <a href="#portfolio" class="btn btn-primary">
+                        <a href="assets/CV_Vu_Hai_Nam_Video_Editor.pdf" target="_blank" download="CV_Vu_Hai_Nam_Video_Editor.pdf" class="btn btn-primary btn-cv">
+                            <i data-lucide="file-down" class="btn-icon"></i>
+                            <span>Tải CV (PDF)</span>
+                        </a>
+                        <a href="#portfolio" class="btn btn-outline">
                             <i data-lucide="play" class="btn-icon"></i>
                             <span>Xem các dự án</span>
                         </a>
@@ -180,125 +313,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===================== MARQUEE BANNER ===================== -->
-    <div class="marquee">
-        <div class="marquee-track">
-            <div class="marquee-content">
-                <span class="marquee-item">Video Editor</span>
-                <span class="marquee-dot">✦</span>
-                <span class="marquee-item">Motion Graphics</span>
-                <span class="marquee-dot">✦</span>
-                <span class="marquee-item">Filmmaker</span>
-                <span class="marquee-dot">✦</span>
-                <span class="marquee-item">Color Grading</span>
-                <span class="marquee-dot">✦</span>
-                <span class="marquee-item">Storytelling</span>
-                <span class="marquee-dot">✦</span>
-                <span class="marquee-item">Cinematography</span>
-                <span class="marquee-dot">✦</span>
-                <span class="marquee-item">Video Editor</span>
-                <span class="marquee-dot">✦</span>
-                <span class="marquee-item">Motion Graphics</span>
-                <span class="marquee-dot">✦</span>
-                <span class="marquee-item">Filmmaker</span>
-                <span class="marquee-dot">✦</span>
-                <span class="marquee-item">Color Grading</span>
-                <span class="marquee-dot">✦</span>
-                <span class="marquee-item">Storytelling</span>
-                <span class="marquee-dot">✦</span>
-                <span class="marquee-item">Cinematography</span>
-                <span class="marquee-dot">✦</span>
-            </div>
-            <div class="marquee-content" aria-hidden="true">
-                <span class="marquee-item">Video Editor</span>
-                <span class="marquee-dot">✦</span>
-                <span class="marquee-item">Motion Graphics</span>
-                <span class="marquee-dot">✦</span>
-                <span class="marquee-item">Filmmaker</span>
-                <span class="marquee-dot">✦</span>
-                <span class="marquee-item">Color Grading</span>
-                <span class="marquee-dot">✦</span>
-                <span class="marquee-item">Storytelling</span>
-                <span class="marquee-dot">✦</span>
-                <span class="marquee-item">Cinematography</span>
-                <span class="marquee-dot">✦</span>
-                <span class="marquee-item">Video Editor</span>
-                <span class="marquee-dot">✦</span>
-                <span class="marquee-item">Motion Graphics</span>
-                <span class="marquee-dot">✦</span>
-                <span class="marquee-item">Filmmaker</span>
-                <span class="marquee-dot">✦</span>
-                <span class="marquee-item">Color Grading</span>
-                <span class="marquee-dot">✦</span>
-                <span class="marquee-item">Storytelling</span>
-                <span class="marquee-dot">✦</span>
-                <span class="marquee-item">Cinematography</span>
-                <span class="marquee-dot">✦</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- ===================== HERO ===================== -->
-    <section class="hero" id="hero">
-        <div class="hero-bg">
-            <div class="hero-gradient"></div>
-            <div class="hero-grain"></div>
-        </div>
-        <div class="hero-content">
-            <p class="hero-subtitle reveal">— Video Editor & Filmmaker</p>
-            <h1 class="hero-title reveal">
-                Kể câu chuyện<br>
-                của bạn qua<br>
-                <span class="text-accent">từng khung hình</span>
-            </h1>
-            <p class="hero-desc reveal">
-                Biến ý tưởng thành những thước phim sống động, tinh tế và đầy cảm xúc.
-            </p>
-            <div class="hero-buttons reveal">
-                <a href="#portfolio" class="btn btn-primary">Xem dự án</a>
-                <a href="#contact" class="btn btn-outline">Liên hệ ngay</a>
-            </div>
-        </div>
-        <div class="hero-scroll">
-            <a href="#showreel" class="scroll-indicator">
-                <span>Cuộn xuống</span>
-                <div class="scroll-line"></div>
-            </a>
-        </div>
-    </section>
-
-    <!-- ===================== SHOWREEL ===================== -->
-    <section class="section showreel" id="showreel">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-label reveal">Showreel</span>
-                <h2 class="section-title reveal">Xem <span class="text-accent">Showreel</span> của tôi</h2>
-                <p class="section-desc reveal">Tổng hợp những khoảnh khắc đẹp nhất từ các dự án gần đây.</p>
-            </div>
-            <div class="showreel-video reveal">
-                <div class="video-wrapper">
-                    <div class="video-placeholder" id="videoPlaceholder">
-                        <div class="play-button" id="playButton">
-                            <i data-lucide="play" class="play-icon"></i>
-                        </div>
-                        <p class="video-note">Nhấn để phát showreel</p>
-                    </div>
-                    <iframe 
-                        id="showreelVideo"
-                        src="" 
-                        data-src="https://www.youtube.com/embed/5AFEA5_EMss"
-                        title="Showreel — Hải Nam" 
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen
-                        style="display:none;">
-                    </iframe>
-                </div>
-                <div class="video-glow"></div>
             </div>
         </div>
     </section>
@@ -710,11 +724,13 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <a href="#about" class="footer-logo">
+                <a href="#hero" class="footer-logo">
                     <span class="logo-text">So<span class="logo-accent">Sea</span></span>
                 </a>
                 <p class="footer-text">© 2026 SoSea — Vũ Hải Nam. Video Editor / Motion Graphic</p>
                 <div class="footer-links">
+                    <a href="#hero">Trang chủ</a>
+                    <a href="#showreel">Showreel</a>
                     <a href="#about">Giới thiệu</a>
                     <a href="#portfolio">Dự án</a>
                     <a href="#services">Dịch vụ</a>
@@ -728,7 +744,7 @@
     <div class="modal" id="projectModal">
         <div class="modal-backdrop" id="modalBackdrop"></div>
         <div class="modal-content">
-            <button class="modal-close" id="modalClose">
+            <button class="modal-close" id="modalClose" aria-label="Đóng cửa sổ">
                 <i data-lucide="x" class="close-icon"></i>
             </button>
             <div class="modal-body">
@@ -736,6 +752,21 @@
                 <h3 class="modal-title" id="modalTitle"></h3>
                 <div class="modal-video" id="modalVideo"></div>
                 <p class="modal-desc" id="modalDesc"></p>
+
+                <!-- Nút xem chi tiết thông tin dự án -->
+                <button type="button" class="btn-project-detail" id="btnProjectDetail" aria-expanded="false">
+                    <div class="btn-detail-left">
+                        <i data-lucide="layers" class="detail-btn-icon"></i>
+                        <span>Chi tiết thông tin dự án</span>
+                    </div>
+                    <div class="btn-detail-right">
+                        <span class="detail-badge-hint">Vai trò & Quy trình</span>
+                        <i data-lucide="chevron-down" class="detail-chevron"></i>
+                    </div>
+                </button>
+
+                <!-- Bảng chi tiết thông tin dự án -->
+                <div class="project-detail-panel" id="projectDetailPanel" style="display: none;"></div>
             </div>
         </div>
     </div>

@@ -264,6 +264,28 @@ input, textarea {
     justify-content: center;
 }
 
+.btn-ghost {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+}
+
+.btn-ghost:hover {
+    color: var(--accent);
+    border-color: var(--border-accent);
+    background: var(--accent-glow);
+    transform: translateY(-2px);
+}
+
+.btn-cv {
+    font-weight: 600;
+    gap: 8px;
+}
+
+.btn-cv:hover {
+    box-shadow: 0 6px 24px rgba(201, 168, 76, 0.35);
+}
+
 .btn-icon {
     width: 18px;
     height: 18px;
@@ -1708,11 +1730,11 @@ input, textarea {
 .modal-content {
     position: relative;
     width: 90%;
-    max-width: 640px;
+    max-width: 760px;
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius-xl);
-    padding: 40px;
+    padding: 36px 36px 40px;
     transform: translateY(20px) scale(0.95);
     transition: transform var(--transition-normal);
     max-height: 90vh;
@@ -1783,6 +1805,262 @@ input, textarea {
 .modal-video iframe {
     width: 100%;
     height: 100%;
+}
+
+/* ============================================
+   PROJECT DETAIL BUTTON & ACCORDION PANEL
+   ============================================ */
+.btn-project-detail {
+    width: 100%;
+    margin-top: 24px;
+    padding: 14px 20px;
+    background: rgba(201, 168, 76, 0.08);
+    border: 1px solid var(--border-accent);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all var(--transition-normal);
+}
+
+.btn-project-detail:hover {
+    background: rgba(201, 168, 76, 0.16);
+    border-color: var(--accent);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px rgba(201, 168, 76, 0.2);
+}
+
+.btn-project-detail.active {
+    background: rgba(201, 168, 76, 0.18);
+    border-color: var(--accent);
+}
+
+.btn-detail-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.detail-btn-icon {
+    width: 20px;
+    height: 20px;
+    color: var(--accent);
+    flex-shrink: 0;
+}
+
+.btn-detail-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.detail-badge-hint {
+    font-size: 0.78rem;
+    font-weight: 500;
+    padding: 4px 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    color: var(--accent);
+}
+
+.detail-chevron {
+    width: 18px;
+    height: 18px;
+    color: var(--accent);
+    transition: transform var(--transition-normal);
+}
+
+.btn-project-detail.active .detail-chevron {
+    transform: rotate(180deg);
+}
+
+/* Panel chi tiết thông tin dự án */
+.project-detail-panel {
+    margin-top: 16px;
+    border-radius: var(--radius-lg);
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    animation: detailFadeSlide 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes detailFadeSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.detail-card {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Detail Badges Header */
+.detail-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+}
+
+.detail-meta-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.detail-meta-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.detail-meta-label i, .detail-meta-label svg {
+    width: 14px;
+    height: 14px;
+    color: var(--accent);
+}
+
+.detail-meta-value {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* Detail Section */
+.detail-section {
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+}
+
+.detail-section-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--accent);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.detail-section-title i, .detail-section-title svg {
+    width: 16px;
+    height: 16px;
+    color: var(--accent);
+}
+
+/* Tools tags */
+.detail-tools-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.detail-tool-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-accent);
+    border-radius: 50px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+/* Workflow Step list */
+.detail-workflow-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.detail-workflow-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 12px 14px;
+    background: var(--bg-card);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    transition: border-color var(--transition-fast);
+}
+
+.detail-workflow-item:hover {
+    border-color: var(--border-accent);
+}
+
+.detail-step-badge {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--accent-glow);
+    border: 1px solid var(--border-accent);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.detail-step-content {
+    flex: 1;
+}
+
+.detail-step-title {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.detail-step-desc {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+}
+
+/* Highlights Box */
+.detail-highlight-box {
+    background: rgba(201, 168, 76, 0.06);
+    border: 1px dashed var(--border-accent);
+    border-radius: var(--radius-md);
+    padding: 16px 18px;
+}
+
+.detail-highlight-box .detail-section-title {
+    margin-bottom: 6px;
+}
+
+.detail-highlight-text {
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    line-height: 1.6;
 }
 
 /* ============================================
@@ -2093,8 +2371,50 @@ input, textarea {
 
     /* Modal */
     .modal-content {
-        padding: 24px;
+        padding: 24px 18px;
         width: 95%;
+    }
+
+    .btn-project-detail {
+        padding: 12px 14px;
+        font-size: 0.88rem;
+    }
+
+    .detail-badge-hint {
+        display: none;
+    }
+
+    .detail-card {
+        padding: 16px 14px;
+        gap: 16px;
+    }
+
+    .detail-meta-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .detail-meta-item {
+        padding: 10px 12px;
+    }
+
+    .detail-workflow-item {
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .detail-step-badge {
+        width: 24px;
+        height: 24px;
+        font-size: 0.7rem;
+    }
+
+    .detail-step-title {
+        font-size: 0.84rem;
+    }
+
+    .detail-step-desc {
+        font-size: 0.78rem;
     }
 }
 
