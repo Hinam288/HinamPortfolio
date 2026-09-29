@@ -518,8 +518,8 @@ input, textarea {
    HERO SECTION
    ============================================ */
 .hero {
-    min-height: 100vh;
-    min-height: 100dvh;
+    min-height: 85vh;
+    padding: 90px 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1158,12 +1158,26 @@ input, textarea {
 }
 
 /* ============================================
-   SHOWREEL SECTION
+   SHOWREEL SECTION (TOP SECTION)
    ============================================ */
+.showreel {
+    background: var(--bg-primary);
+    position: relative;
+    padding-top: max(130px, calc(95px + env(safe-area-inset-top)));
+    padding-bottom: 70px;
+    overflow: hidden;
+}
+
 .showreel-video {
     position: relative;
     max-width: 900px;
     margin: 0 auto;
+}
+
+.showreel-scroll {
+    display: flex;
+    justify-content: center;
+    margin-top: 36px;
 }
 
 .video-wrapper {
@@ -2273,12 +2287,21 @@ input, textarea {
         justify-content: center;
     }
 
-    /* Hero */
+    /* Showreel (Top Section) */
+    .showreel {
+        padding-top: max(100px, calc(76px + env(safe-area-inset-top)));
+        padding-bottom: 40px;
+    }
+
+    .showreel-scroll {
+        margin-top: 24px;
+    }
+
+    /* Hero (Câu chuyện) */
     .hero {
-        min-height: 100vh;
-        min-height: 100dvh;
-        padding-top: max(80px, calc(64px + env(safe-area-inset-top)));
-        padding-bottom: max(40px, calc(24px + env(safe-area-inset-bottom)));
+        min-height: auto;
+        padding-top: 50px;
+        padding-bottom: 50px;
     }
 
     .hero-title {
