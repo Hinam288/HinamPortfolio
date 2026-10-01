@@ -453,7 +453,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Local video — play with controls and sound
                 modalVideo.innerHTML = `
                     <video src="${data.video}" controls autoplay playsinline
-                        style="width:100%; height:100%; border-radius: 12px; background:#000;">
+                        style="width:100%; height:100%; border-radius: 12px; background:#000; object-fit: contain;">
                     </video>`;
                 
                 const vid = modalVideo.querySelector('video');
