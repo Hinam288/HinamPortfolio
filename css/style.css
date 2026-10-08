@@ -515,18 +515,8 @@ input, textarea {
 }
 
 /* ============================================
-   HERO SECTION
+   SHOWREEL BACKGROUND
    ============================================ */
-.hero {
-    min-height: 85vh;
-    padding: 90px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-}
-
 .hero-bg {
     position: absolute;
     inset: 0;
@@ -549,55 +539,7 @@ input, textarea {
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
-.hero-content {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    padding: 0 24px;
-}
-
-.hero-subtitle {
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--accent);
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    margin-bottom: 24px;
-}
-
-.hero-title {
-    font-family: var(--font-heading);
-    font-size: clamp(2.5rem, 7vw, 5.5rem);
-    font-weight: 800;
-    line-height: 1.1;
-    margin-bottom: 24px;
-    letter-spacing: -1px;
-}
-
-.hero-desc {
-    font-size: 1.1rem;
-    color: var(--text-secondary);
-    max-width: 500px;
-    margin: 0 auto 40px;
-    line-height: 1.7;
-}
-
-.hero-buttons {
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
 /* Scroll Indicator */
-.hero-scroll {
-    position: absolute;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1;
-}
-
 .scroll-indicator {
     display: flex;
     flex-direction: column;
@@ -1248,15 +1190,6 @@ input, textarea {
 
 .showreel-scroll {
     grid-column: 1 / -1;
-}
-
-.hero-story {
-    min-height: auto;
-    padding: 80px 0;
-}
-
-.hero-story .hero-title {
-    font-size: clamp(2rem, 4vw, 3.4rem);
 }
 
 .showreel-scroll {
@@ -2432,25 +2365,6 @@ input, textarea {
         margin-top: 24px;
     }
 
-    /* Hero (Câu chuyện) */
-    .hero {
-        min-height: auto;
-        padding-top: 50px;
-        padding-bottom: 50px;
-    }
-
-    .hero-title {
-        font-size: clamp(2rem, 8vw, 3.5rem);
-    }
-
-    .hero-desc {
-        font-size: 1rem;
-    }
-
-    .hero-scroll {
-        display: none;
-    }
-
     /* About Section Mobile Redesign */
     .about {
         padding-top: 96px;
@@ -2734,17 +2648,6 @@ input, textarea {
 
     .indicator-label {
         display: none;
-    }
-
-    .hero-buttons {
-        flex-direction: column;
-        width: 100%;
-        padding: 0 16px;
-    }
-
-    .hero-buttons .btn {
-        width: 100%;
-        justify-content: center;
     }
 
     .portfolio-filters {
