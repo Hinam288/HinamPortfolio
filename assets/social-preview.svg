@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#0a0a0a"/><stop offset="1" stop-color="#202017"/>
+    </linearGradient>
+    <clipPath id="portrait"><rect x="822" y="82" width="308" height="466" rx="24"/></clipPath>
+  </defs>
+  <rect width="1200" height="630" fill="url(#background)"/>
+  <circle cx="1190" cy="30" r="400" fill="none" stroke="#c9a84c" stroke-opacity=".1"/>
+  <circle cx="1190" cy="30" r="325" fill="none" stroke="#c9a84c" stroke-opacity=".1"/>
+  <rect x="34" y="34" width="1132" height="562" rx="28" fill="none" stroke="#c9a84c" stroke-opacity=".25"/>
+  <g font-family="Arial, sans-serif">
+    <text x="78" y="112" font-size="31" font-weight="700" fill="#f5f5f5">So<tspan fill="#c9a84c">Sea</tspan></text>
+    <text x="78" y="185" font-size="17" letter-spacing="4" fill="#c9a84c">PORTFOLIO 2026</text>
+    <text x="73" y="283" font-size="76" font-weight="700" letter-spacing="-2" fill="#f5f5f5">Vũ Hải Nam</text>
+    <text x="78" y="341" font-size="26" fill="#e3c56f">Video Editor &amp; Motion Graphic Designer</text>
+    <rect x="78" y="382" width="64" height="3" fill="#c9a84c"/>
+    <text x="78" y="437" font-size="22" fill="#c2c2b9">Quay dựng · Animation · Hậu kỳ âm thanh</text>
+    <text x="78" y="525" font-size="18" fill="#f5f5f5">Xem showreel &amp; các dự án của tôi</text>
+    <text x="78" y="554" font-size="15" fill="#9b9b91">hinam288.github.io/HinamPortfolio</text>
+  </g>
+  <image href="avatar.jpg" x="822" y="82" width="308" height="466" preserveAspectRatio="xMidYMid slice" clip-path="url(#portrait)"/>
+  <rect x="822" y="82" width="308" height="466" rx="24" fill="none" stroke="#c9a84c" stroke-opacity=".5"/>
+</svg>

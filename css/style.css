@@ -294,7 +294,7 @@ input, textarea {
 /* ============================================
    REVEAL ANIMATION
    ============================================ */
-.reveal {
+.js-reveal .reveal {
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
@@ -1174,6 +1174,91 @@ input, textarea {
     margin: 0 auto;
 }
 
+/* Keyboard navigation stays visible in both themes. */
+:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 5px;
+}
+
+.video-placeholder:focus-visible {
+    outline-offset: -6px;
+}
+
+.skip-link {
+    position: fixed;
+    top: 12px;
+    left: 16px;
+    z-index: 3000;
+    padding: 12px 18px;
+    border-radius: var(--radius-sm);
+    background: var(--accent);
+    color: #0a0a0a;
+    transform: translateY(-160%);
+}
+
+.skip-link:focus {
+    transform: translateY(0);
+}
+
+.showreel .container {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    align-items: center;
+    gap: 40px;
+}
+
+.showreel .section-header {
+    text-align: left;
+    margin-bottom: 0;
+}
+
+.showreel .section-header .section-label {
+    justify-content: flex-start;
+}
+
+.showreel .section-header .section-desc {
+    margin: 18px 0 0;
+    max-width: 480px;
+}
+
+.showreel .intro-title {
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    line-height: 1.12;
+    letter-spacing: -0.045em;
+}
+
+.intro-role {
+    margin-top: 18px;
+    font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.intro-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
+}
+
+.showreel .showreel-video {
+    width: 100%;
+    min-width: 0;
+}
+
+.showreel-scroll {
+    grid-column: 1 / -1;
+}
+
+.hero-story {
+    min-height: auto;
+    padding: 80px 0;
+}
+
+.hero-story .hero-title {
+    font-size: clamp(2rem, 4vw, 3.4rem);
+}
+
 .showreel-scroll {
     display: flex;
     justify-content: center;
@@ -1207,6 +1292,7 @@ input, textarea {
     cursor: pointer;
     z-index: 2;
     transition: opacity var(--transition-normal);
+    width: 100%;
 }
 
 .video-placeholder.hidden {
@@ -1382,6 +1468,14 @@ input, textarea {
 }
 
 .portfolio-thumb:hover .portfolio-overlay {
+    opacity: 1;
+}
+
+.video-placeholder[hidden] {
+    display: none;
+}
+
+.portfolio-thumb:focus-within .portfolio-overlay {
     opacity: 1;
 }
 
@@ -1726,13 +1820,13 @@ input, textarea {
     align-items: center;
     justify-content: center;
     opacity: 0;
-    visibility: hidden;
-    transition: all var(--transition-normal);
+    pointer-events: none;
+    transition: opacity var(--transition-normal);
 }
 
 .modal.active {
     opacity: 1;
-    visibility: visible;
+    pointer-events: auto;
 }
 
 .modal-backdrop {
@@ -1774,7 +1868,7 @@ input, textarea {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all var(--transition-fast);
+    transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
 }
 
 .modal-close:hover {
@@ -2129,7 +2223,7 @@ input, textarea {
     justify-content: center;
     cursor: pointer;
     z-index: 2005;
-    transition: all var(--transition-normal);
+    transition: background-color var(--transition-normal), color var(--transition-normal), transform var(--transition-normal);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
 }
@@ -2235,6 +2329,45 @@ input, textarea {
     }
 }
 
+@media (max-width: 960px) {
+    .showreel .container {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 32px;
+    }
+
+    .showreel .section-header {
+        text-align: center;
+    }
+
+    .showreel .section-header .section-label,
+    .intro-actions {
+        justify-content: center;
+    }
+
+    .showreel .section-header .section-desc {
+        margin: 18px auto 0;
+    }
+
+    .showreel .showreel-video {
+        max-width: 760px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .js-reveal .reveal {
+        opacity: 1;
+        transform: none;
+    }
+}
+
 /* ============================================
    RESPONSIVE — MOBILE (<=768px)
    ============================================ */
@@ -2325,7 +2458,7 @@ input, textarea {
     }
 
     .about-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
         gap: 24px;
         text-align: center;
     }
@@ -2394,6 +2527,7 @@ input, textarea {
 
     .about-actions {
         display: flex;
+        flex-wrap: wrap;
         gap: 10px;
         width: 100%;
         max-width: 340px;
@@ -2402,7 +2536,7 @@ input, textarea {
     }
 
     .about-actions .btn {
-        flex: 1;
+        flex: 1 1 140px;
         justify-content: center;
         padding: 12px 16px;
         font-size: 0.88rem;
@@ -2411,7 +2545,7 @@ input, textarea {
 
     .stats-grid {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 10px;
         width: 100%;
         max-width: 440px;
@@ -2419,6 +2553,7 @@ input, textarea {
     }
 
     .stat-item {
+        min-width: 0;
         padding: 14px 8px;
         border-radius: var(--radius-md);
     }
@@ -2435,7 +2570,7 @@ input, textarea {
 
     .skills-grid {
         display: grid;
-        grid-template-columns: repeat(4, 1fr) !important;
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
         gap: 8px;
         width: 100%;
         max-width: 440px;
@@ -2443,6 +2578,7 @@ input, textarea {
     }
 
     .skill-item {
+        min-width: 0;
         flex-direction: column;
         align-items: center;
         text-align: center;

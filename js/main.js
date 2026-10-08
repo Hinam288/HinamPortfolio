@@ -4,8 +4,49 @@
    ============================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize Lucide icons
-    lucide.createIcons();
+    // Icons are optional: a missing asset must not stop the page's interactions.
+    const renderIcons = () => {
+        const fallbacks = { play: '▶', x: '×', sun: '☀', moon: '☾', 'external-link': '↗', 'chevron-left': '‹', 'chevron-right': '›', 'chevron-down': '⌄', 'chevron-up': '⌃' };
+        document.querySelectorAll('i[data-lucide]').forEach(icon => {
+            icon.setAttribute('aria-hidden', 'true');
+            icon.textContent = fallbacks[icon.dataset.lucide] || '';
+        });
+        try {
+            window.lucide?.createIcons();
+        } catch {
+            // Text labels and basic icon fallbacks remain usable.
+        }
+    };
+    renderIcons();
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const focusableElements = container => Array.from(container.querySelectorAll(
+        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), iframe, video[controls], [tabindex]:not([tabindex="-1"])'
+    )).filter(element => !element.closest('[inert]') && element.getClientRects().length > 0 && getComputedStyle(element).visibility !== 'hidden');
+
+    const trapFocus = (event, elements) => {
+        if (event.key !== 'Tab' || elements.length === 0) return;
+        const first = elements[0];
+        const last = elements[elements.length - 1];
+        const active = document.activeElement;
+        if (!elements.includes(active) || (event.shiftKey && active === first) || (!event.shiftKey && active === last)) {
+            event.preventDefault();
+            (event.shiftKey ? last : first).focus();
+        }
+    };
+
+    const backgroundInertState = new Map();
+    const isolateBackground = surface => {
+        Array.from(document.body.children).forEach(element => {
+            if (element === surface || element.contains(surface) || element.tagName === 'SCRIPT') return;
+            backgroundInertState.set(element, element.inert);
+            element.inert = true;
+        });
+    };
+    const restoreBackground = () => {
+        backgroundInertState.forEach((wasInert, element) => { element.inert = wasInert; });
+        backgroundInertState.clear();
+    };
 
     // ========================
     // THEME TOGGLE
@@ -14,15 +55,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const htmlElement = document.documentElement;
 
     // Load saved theme from localStorage
-    const savedTheme = localStorage.getItem('portfolio-theme') || 'dark';
-    htmlElement.setAttribute('data-theme', savedTheme);
+    let savedTheme = 'dark';
+    try { savedTheme = localStorage.getItem('portfolio-theme') || 'dark'; } catch { /* Storage is optional. */ }
+    const applyTheme = theme => {
+        htmlElement.setAttribute('data-theme', theme);
+        themeToggle.setAttribute('aria-pressed', String(theme === 'light'));
+        themeToggle.setAttribute('aria-label', theme === 'light' ? 'Bật giao diện tối' : 'Bật giao diện sáng');
+    };
+    applyTheme(savedTheme === 'light' ? 'light' : 'dark');
 
     themeToggle.addEventListener('click', () => {
         const currentTheme = htmlElement.getAttribute('data-theme');
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
         
-        htmlElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('portfolio-theme', newTheme);
+        applyTheme(newTheme);
+        try { localStorage.setItem('portfolio-theme', newTheme); } catch { /* Theme works without storage. */ }
     });
 
     // ========================
@@ -43,19 +90,42 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     window.addEventListener('scroll', handleScroll);
 
-    // Hamburger toggle
-    hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        navMenu.classList.toggle('active');
-        document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+    const mobileLayout = window.matchMedia('(max-width: 768px)');
+    const setMenuOpen = (isOpen, returnFocus = false) => {
+        hamburger.classList.toggle('active', isOpen);
+        navMenu.classList.toggle('active', isOpen);
+        hamburger.setAttribute('aria-expanded', String(isOpen));
+        hamburger.setAttribute('aria-label', isOpen ? 'Đóng menu' : 'Mở menu');
+        navMenu.inert = mobileLayout.matches && !isOpen;
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+        if (isOpen) {
+            isolateBackground(navbar);
+            navLinks[0]?.focus();
+        } else {
+            restoreBackground();
+            if (returnFocus) hamburger.focus();
+        }
+    };
+    navMenu.inert = mobileLayout.matches;
+    hamburger.addEventListener('click', () => setMenuOpen(!navMenu.classList.contains('active')));
+    mobileLayout.addEventListener('change', () => {
+        if (navMenu.classList.contains('active')) setMenuOpen(false);
+        navMenu.inert = mobileLayout.matches;
+    });
+    document.addEventListener('keydown', event => {
+        if (!navMenu.classList.contains('active')) return;
+        if (event.key === 'Escape') {
+            event.preventDefault();
+            setMenuOpen(false, true);
+        } else {
+            trapFocus(event, [...focusableElements(navMenu), themeToggle, hamburger]);
+        }
     });
 
     // Set active link and close menu on click
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
-            hamburger.classList.remove('active');
-            navMenu.classList.remove('active');
-            document.body.style.overflow = '';
+            if (navMenu.classList.contains('active')) setMenuOpen(false);
 
             navLinks.forEach(l => l.classList.remove('active'));
             link.classList.add('active');
@@ -100,31 +170,34 @@ document.addEventListener('DOMContentLoaded', () => {
     // ========================
     const revealElements = document.querySelectorAll('.reveal');
 
-    const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
-            if (entry.isIntersecting) {
-                // Stagger the animation based on sibling index
-                const siblings = entry.target.parentElement.querySelectorAll('.reveal');
-                let delay = 0;
-                siblings.forEach((sibling, i) => {
-                    if (sibling === entry.target) {
-                        delay = i * 80;
-                    }
-                });
-                
-                setTimeout(() => {
-                    entry.target.classList.add('visible');
-                }, delay);
-                
-                revealObserver.unobserve(entry.target);
-            }
-        });
-    }, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -40px 0px'
-    });
+    if ('IntersectionObserver' in window && !prefersReducedMotion.matches) {
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Stagger the animation based on sibling index
+                    const siblings = entry.target.parentElement.querySelectorAll('.reveal');
+                    let delay = 0;
+                    siblings.forEach((sibling, i) => {
+                        if (sibling === entry.target) {
+                            delay = i * 80;
+                        }
+                    });
 
-    revealElements.forEach(el => revealObserver.observe(el));
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, delay);
+
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -40px 0px'
+        });
+
+        htmlElement.classList.add('js-reveal');
+        revealElements.forEach(el => revealObserver.observe(el));
+    }
 
     // ========================
     // SHOWREEL VIDEO
@@ -140,6 +213,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 showreelVideo.src = videoSrc + '?autoplay=1';
                 showreelVideo.style.display = 'block';
                 videoPlaceholder.classList.add('hidden');
+                videoPlaceholder.hidden = true;
+                showreelVideo.focus();
             }
         });
     }
@@ -187,6 +262,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 video.play().catch(() => {});
             }
         });
+        filterBtns.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.filter === currentFilter)));
+        if (loadMoreBtn) loadMoreBtn.setAttribute('aria-expanded', String(isExpanded));
 
         // Cập nhật trạng thái nút "Xem thêm / Thu gọn"
         if (loadMoreContainer) {
@@ -200,9 +277,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (loadMoreText) loadMoreText.textContent = `Xem thêm (${remaining} video)`;
                     if (loadMoreIcon) loadMoreIcon.setAttribute('data-lucide', 'chevron-down');
                 }
-                if (window.lucide) {
-                    lucide.createIcons();
-                }
+                renderIcons();
             } else {
                 loadMoreContainer.style.display = 'none';
             }
@@ -231,7 +306,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!isExpanded) {
                 const portfolioSection = document.getElementById('portfolio');
                 if (portfolioSection) {
-                    portfolioSection.scrollIntoView({ behavior: 'smooth' });
+                    portfolioSection.scrollIntoView({ behavior: prefersReducedMotion.matches ? 'auto' : 'smooth' });
                 }
             }
         });
@@ -407,6 +482,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnModalNext = document.getElementById('btnModalNext');
 
     let currentModalIndex = -1;
+    let modalTrigger = null;
+    let modalTransitionTimer = null;
+    let modalResetTimer = null;
 
     // Get current list of projects matching the active filter
     const getActiveProjectItems = () => {
@@ -428,14 +506,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 projectDetailPanel.style.display = 'block';
                 btnProjectDetail.classList.add('active');
                 btnProjectDetail.setAttribute('aria-expanded', 'true');
-                if (window.lucide) {
-                    lucide.createIcons();
-                }
+                renderIcons();
             }
         });
     }
 
     const openModal = (data, currentIndex = 1, totalCount = 1) => {
+        const opening = !modal.classList.contains('active');
+        if (opening) modalTrigger = document.activeElement;
         modalTitle.textContent = data.title;
         modalCategory.textContent = data.category;
         modalDesc.textContent = data.desc;
@@ -462,7 +540,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             } else {
                 // YouTube / Vimeo embed
-                modalVideo.innerHTML = `<iframe src="${data.video}" frameborder="0" allowfullscreen></iframe>`;
+                modalVideo.innerHTML = `<iframe src="${data.video}" title="Video dự án" frameborder="0" allowfullscreen></iframe>`;
+                modalVideo.querySelector('iframe').title = `Video dự án: ${data.title}`;
             }
             modalVideo.style.display = 'block';
         } else {
@@ -544,16 +623,23 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        modal.inert = false;
+        modal.setAttribute('aria-hidden', 'false');
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
-
-        if (window.lucide) {
-            lucide.createIcons();
+        renderIcons();
+        if (opening) {
+            isolateBackground(modal);
+            modalClose.focus({ preventScroll: true });
         }
     };
 
     const closeModal = () => {
+        clearTimeout(modalTransitionTimer);
+        clearTimeout(modalResetTimer);
+        isModalTransitioning = false;
         modal.classList.remove('active');
+        restoreBackground();
         document.body.style.overflow = '';
         currentModalIndex = -1;
         modalVideo.classList.remove('crossfade-out', 'crossfade-in');
@@ -566,6 +652,10 @@ document.addEventListener('DOMContentLoaded', () => {
             btnProjectDetail.classList.remove('active');
             btnProjectDetail.setAttribute('aria-expanded', 'false');
         }
+        if (modalTrigger?.isConnected) modalTrigger.focus({ preventScroll: true });
+        modal.setAttribute('aria-hidden', 'true');
+        modal.inert = true;
+        modalTrigger = null;
     };
 
     // Open Modal by index in current active items list
@@ -581,6 +671,7 @@ document.addEventListener('DOMContentLoaded', () => {
             index = 0;
         }
 
+        if (isModalTransitioning) return;
         currentModalIndex = index;
         const currentItem = items[index];
         const thumb = currentItem.querySelector('.portfolio-thumb');
@@ -590,16 +681,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Nếu Modal đang mở -> Áp dụng hiệu ứng Video Crossfade mượt mà
         if (modal.classList.contains('active')) {
-            if (isModalTransitioning) return;
             isModalTransitioning = true;
             modalVideo.classList.remove('crossfade-in');
             modalVideo.classList.add('crossfade-out');
 
-            setTimeout(() => {
+            modalTransitionTimer = setTimeout(() => {
+                if (!modal.classList.contains('active')) return;
                 openModal(data, index + 1, items.length);
                 modalVideo.classList.remove('crossfade-out');
                 modalVideo.classList.add('crossfade-in');
-                setTimeout(() => {
+                modalResetTimer = setTimeout(() => {
                     modalVideo.classList.remove('crossfade-in');
                     isModalTransitioning = false;
                 }, 200);
@@ -673,6 +764,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Attach click to view buttons
     document.querySelectorAll('.btn-view').forEach(btn => {
+        // The text overlay is hidden on touch devices; its button must stay usable.
+        btn.closest('.portfolio-thumb')?.appendChild(btn);
+        btn.setAttribute('aria-label', `Xem dự án: ${btn.dataset.title}`);
+        btn.setAttribute('aria-haspopup', 'dialog');
+        btn.setAttribute('aria-controls', 'projectModal');
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
             const item = btn.closest('.portfolio-item');
@@ -694,11 +790,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // Keyboard navigation: Escape to close, ArrowLeft for Prev, ArrowRight for Next
     document.addEventListener('keydown', (e) => {
         if (!modal.classList.contains('active')) return;
-        if (e.key === 'Escape') {
+        if (e.key === 'Tab') {
+            trapFocus(e, focusableElements(modal));
+        } else if (e.key === 'Escape') {
+            e.preventDefault();
             closeModal();
+        } else if (e.target.closest('video, iframe, input, textarea, select, [contenteditable="true"]')) {
+            return;
         } else if (e.key === 'ArrowRight') {
+            e.preventDefault();
             nextProject();
         } else if (e.key === 'ArrowLeft') {
+            e.preventDefault();
             prevProject();
         }
     });
@@ -741,14 +844,16 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
+            const target = document.getElementById(this.getAttribute('href').slice(1));
             if (target) {
                 const offset = 80; // navbar height
                 const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
                 window.scrollTo({
                     top: top,
-                    behavior: 'smooth'
+                    behavior: prefersReducedMotion.matches ? 'auto' : 'smooth'
                 });
+                if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
+                target.focus({ preventScroll: true });
             }
         });
     });

@@ -6,8 +6,21 @@
     <meta name="description" content="Vũ Hải Nam — Video Editor / Motion Graphic. Hơn 4 năm kinh nghiệm dựng phim, animation, quay phim và hậu kỳ âm thanh.">
     <meta name="keywords" content="video editor, motion graphic, animation, quay phim, dựng phim, portfolio, Vũ Hải Nam">
     <meta property="og:title" content="Vũ Hải Nam — Video Editor & Motion Graphic">
-    <meta property="og:description" content="Portfolio cá nhân Vũ Hải Nam — Video Editor & Motion Graphic">
+    <meta property="og:description" content="Quay dựng, motion graphic và hậu kỳ âm thanh. Khám phá showreel và các dự án của Vũ Hải Nam.">
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://hinam288.github.io/HinamPortfolio/">
+    <meta property="og:locale" content="vi_VN">
+    <meta property="og:image" content="https://hinam288.github.io/HinamPortfolio/assets/social-preview.jpg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Vũ Hải Nam — Video Editor & Motion Graphic Designer, SoSea">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Vũ Hải Nam — Video Editor & Motion Graphic">
+    <meta name="twitter:description" content="Quay dựng, motion graphic và hậu kỳ âm thanh. Khám phá showreel và các dự án của Vũ Hải Nam.">
+    <meta name="twitter:image" content="https://hinam288.github.io/HinamPortfolio/assets/social-preview.jpg">
+    <meta name="twitter:image:alt" content="Vũ Hải Nam — Video Editor & Motion Graphic Designer, SoSea">
+    <link rel="canonical" href="https://hinam288.github.io/HinamPortfolio/">
     <title>Vũ Hải Nam — Video Editor & Motion Graphic</title>
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 
@@ -16,12 +29,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Lucide Icons (CDN) -->
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <!-- Lucide 1.53.0 stored locally; license: js/lucide.LICENSE -->
+    <script src="js/lucide.min.js" defer></script>
 
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <a class="skip-link" href="#showreel">Đến nội dung chính</a>
 
     <!-- ===================== NAVBAR ===================== -->
     <nav class="navbar" id="navbar">
@@ -40,12 +54,12 @@
             </ul>
 
             <div class="nav-actions">
-                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <button type="button" class="theme-toggle" id="themeToggle" aria-label="Bật giao diện sáng" aria-pressed="false">
                     <i data-lucide="sun" class="theme-icon sun-icon"></i>
                     <i data-lucide="moon" class="theme-icon moon-icon"></i>
                 </button>
 
-                <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <button type="button" class="hamburger" id="hamburger" aria-label="Mở menu" aria-expanded="false" aria-controls="navMenu">
                     <span class="bar"></span>
                     <span class="bar"></span>
                     <span class="bar"></span>
@@ -55,28 +69,33 @@
     </nav>
 
     <!-- ===================== SHOWREEL ===================== -->
-    <section class="section showreel" id="showreel">
+    <section class="section showreel" id="showreel" tabindex="-1" aria-labelledby="introTitle">
         <div class="hero-bg">
             <div class="hero-gradient"></div>
             <div class="hero-grain"></div>
         </div>
         <div class="container">
             <div class="section-header">
-                <span class="section-label reveal">Showreel 2026</span>
-                <h1 class="section-title reveal">Xem <span class="text-accent">Showreel</span> của tôi</h1>
-                <p class="section-desc reveal">Tổng hợp những thước phim & motion graphic ấn tượng nhất từ các dự án gần đây.</p>
+                <span class="section-label">SoSea · Portfolio 2026</span>
+                <h1 class="section-title intro-title" id="introTitle">Vũ <span class="text-accent">Hải Nam</span></h1>
+                <p class="intro-role">Video Editor & Motion Graphic Designer</p>
+                <p class="section-desc">Hơn 4 năm kinh nghiệm quay dựng, animation và hậu kỳ âm thanh. Kể câu chuyện của thương hiệu qua từng khung hình.</p>
+                <div class="intro-actions">
+                    <a href="#contact" class="btn btn-primary">Liên hệ hợp tác</a>
+                    <a href="#portfolio" class="btn btn-outline">Xem dự án</a>
+                    <a href="assets/CV_Vu_Hai_Nam_Video_Editor.pdf" download="CV_Vu_Hai_Nam_Video_Editor.pdf" class="btn btn-ghost">Tải CV (PDF)</a>
+                </div>
             </div>
             <div class="showreel-video reveal">
                 <div class="video-wrapper">
-                    <div class="video-placeholder" id="videoPlaceholder">
-                        <div class="play-button" id="playButton">
-                            <i data-lucide="play" class="play-icon"></i>
-                        </div>
-                        <p class="video-note">Nhấn để phát showreel</p>
-                    </div>
+                    <button type="button" class="video-placeholder" id="videoPlaceholder" aria-label="Phát showreel của Vũ Hải Nam" aria-controls="showreelVideo">
+                        <span class="play-button" id="playButton">
+                            <i data-lucide="play" class="play-icon" aria-hidden="true"></i>
+                        </span>
+                        <span class="video-note">Phát Showreel 2026</span>
+                    </button>
                     <iframe 
                         id="showreelVideo"
-                        src="" 
                         data-src="https://www.youtube.com/embed/5AFEA5_EMss"
                         title="Showreel — Hải Nam" 
                         frameborder="0" 
@@ -782,7 +801,7 @@
     </footer>
 
     <!-- ===================== MODAL ===================== -->
-    <div class="modal" id="projectModal">
+    <div class="modal" id="projectModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc" aria-hidden="true" tabindex="-1" inert>
         <div class="modal-backdrop" id="modalBackdrop"></div>
 
         <!-- Floating Navigation Arrows for Desktop -->
@@ -807,7 +826,7 @@
                 <p class="modal-desc" id="modalDesc"></p>
 
                 <!-- Nút xem chi tiết thông tin dự án -->
-                <button type="button" class="btn-project-detail" id="btnProjectDetail" aria-expanded="false">
+                <button type="button" class="btn-project-detail" id="btnProjectDetail" aria-expanded="false" aria-controls="projectDetailPanel">
                     <div class="btn-detail-left">
                         <i data-lucide="layers" class="detail-btn-icon"></i>
                         <span>Chi tiết thông tin dự án</span>
@@ -840,6 +859,6 @@
         </div>
     </div>
 
-    <script src="js/main.js"></script>
+    <script src="js/main.js" defer></script>
 </body>
 </html>
