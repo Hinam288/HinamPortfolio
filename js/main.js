@@ -269,15 +269,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (loadMoreContainer) {
             if (totalMatching > MAX_VISIBLE) {
                 loadMoreContainer.style.display = 'flex';
+                if (loadMoreBtn) loadMoreBtn.classList.toggle('expanded', isExpanded);
                 if (isExpanded) {
                     if (loadMoreText) loadMoreText.textContent = 'Thu gọn';
-                    if (loadMoreIcon) loadMoreIcon.setAttribute('data-lucide', 'chevron-up');
                 } else {
                     const remaining = totalMatching - MAX_VISIBLE;
                     if (loadMoreText) loadMoreText.textContent = `Xem thêm (${remaining} video)`;
-                    if (loadMoreIcon) loadMoreIcon.setAttribute('data-lucide', 'chevron-down');
                 }
-                renderIcons();
             } else {
                 loadMoreContainer.style.display = 'none';
             }
@@ -525,6 +523,8 @@ document.addEventListener('DOMContentLoaded', () => {
             modalIndicatorNum.textContent = `${currentIndex} / ${totalCount}`;
         }
         
+        modalVideo.classList.toggle('vertical', data.categoryKey === 'tiktok');
+
         if (data.video) {
             // Check if it's a local MP4 file or a YouTube/Vimeo embed
             if (data.video.endsWith('.mp4') || data.video.endsWith('.webm') || data.video.endsWith('.mov')) {
@@ -536,6 +536,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 const vid = modalVideo.querySelector('video');
                 if (vid) {
+                    vid.addEventListener('loadedmetadata', () => {
+                        if (vid.videoHeight > vid.videoWidth) {
+                            modalVideo.classList.add('vertical');
+                        } else {
+                            modalVideo.classList.remove('vertical');
+                        }
+                    }, { once: true });
                     vid.play().catch(() => {});
                 }
             } else {
@@ -642,7 +649,7 @@ document.addEventListener('DOMContentLoaded', () => {
         restoreBackground();
         document.body.style.overflow = '';
         currentModalIndex = -1;
-        modalVideo.classList.remove('crossfade-out', 'crossfade-in');
+        modalVideo.classList.remove('crossfade-out', 'crossfade-in', 'vertical');
         // Stop any playing video/audio
         modalVideo.innerHTML = '';
         if (projectDetailPanel) {

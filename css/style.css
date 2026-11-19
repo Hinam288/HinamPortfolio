@@ -1354,6 +1354,14 @@ input, textarea {
     box-shadow: 0 8px 24px var(--accent-glow-strong);
 }
 
+.portfolio-load-more .btn .btn-icon {
+    transition: transform var(--transition-normal);
+}
+
+.portfolio-load-more .btn.expanded .btn-icon {
+    transform: rotate(180deg);
+}
+
 .portfolio-thumb {
     position: relative;
     aspect-ratio: 16 / 10;
@@ -1862,6 +1870,15 @@ input, textarea {
     background: #000;
     transition: opacity 0.18s cubic-bezier(0.4, 0, 0.2, 1), transform 0.18s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: opacity, transform;
+}
+
+.modal-video.vertical {
+    aspect-ratio: 9 / 16;
+    max-width: 340px;
+    max-height: 62vh;
+    max-height: 62dvh;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .modal-video.crossfade-out {
