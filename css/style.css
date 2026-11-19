@@ -18,8 +18,8 @@
     --border-accent: rgba(201, 168, 76, 0.3);
 
     /* Typography */
-    --font-heading: 'Inter', sans-serif;
-    --font-body: 'Space Grotesk', sans-serif;
+    --font-heading: 'Be Vietnam Pro', sans-serif;
+    --font-body: 'Plus Jakarta Sans', sans-serif;
 
     /* Spacing */
     --section-padding: 120px 0;
@@ -521,6 +521,7 @@ input, textarea {
     position: absolute;
     inset: 0;
     z-index: 0;
+    pointer-events: none;
 }
 
 .hero-gradient {
@@ -1143,6 +1144,8 @@ input, textarea {
 }
 
 .showreel .container {
+    position: relative;
+    z-index: 1;
     display: grid;
     grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
     align-items: center;
@@ -1174,13 +1177,6 @@ input, textarea {
     font-size: clamp(1.05rem, 1.6vw, 1.35rem);
     font-weight: 500;
     color: var(--text-primary);
-}
-
-.intro-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 28px;
 }
 
 .showreel .showreel-video {
@@ -2289,8 +2285,7 @@ input, textarea {
         text-align: center;
     }
 
-    .showreel .section-header .section-label,
-    .intro-actions {
+    .showreel .section-header .section-label {
         justify-content: center;
     }
 
